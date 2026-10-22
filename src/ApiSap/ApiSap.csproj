@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Legacy\**\*.cs" />
+    <Compile Remove="Class\**\*.cs" />
   </ItemGroup>
 
 </Project>
