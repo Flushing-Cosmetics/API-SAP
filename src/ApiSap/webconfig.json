@@ -1,0 +1,20 @@
+{
+  "Api": {
+    "AccessKey": ""
+  },
+  "Database": {
+    "Server": "",
+    "Name": "",
+    "User": "",
+    "Password": ""
+  },
+  "SAP": {
+    "Server": "",
+    "Database": "",
+    "User": "",
+    "Password": "",
+    "DatabaseUser": "",
+    "DatabasePassword": "",
+    "LicenseServer": ""
+  }
+}

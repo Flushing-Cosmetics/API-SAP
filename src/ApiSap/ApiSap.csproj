@@ -15,4 +15,11 @@
     <Compile Remove="Class\**\*.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="webconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

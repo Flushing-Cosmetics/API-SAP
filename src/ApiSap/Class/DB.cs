@@ -12,10 +12,10 @@ namespace WS_SAP
         internal SqlConnection con;
         internal SqlDataAdapter da;
         internal SqlCommand cmd;            
-        private readonly string serverValue = ConfigurationManager.AppSettings["Server"];
-        private readonly string databaseValue = ConfigurationManager.AppSettings["Database"];
-        private readonly string userValue = ConfigurationManager.AppSettings["User"];
-        private readonly string passValue = ConfigurationManager.AppSettings["Password"];
+        private readonly string serverValue = WebConfiguration.GetRequiredValue("Database:Server");
+        private readonly string databaseValue = WebConfiguration.GetRequiredValue("Database:Name");
+        private readonly string userValue = WebConfiguration.GetRequiredValue("Database:User");
+        private readonly string passValue = WebConfiguration.GetRequiredValue("Database:Password");
         /// <summary>
         /// Procedimiento para conectar a la base de datos
         /// </summary>

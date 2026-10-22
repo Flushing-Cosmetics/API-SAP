@@ -14,13 +14,13 @@ namespace WS_SAP
         /// <summary>
         /// Variables de Servidores
         /// </summary>
-        private readonly string SAPServer = ConfigurationManager.AppSettings["SAPServer"];
-        private readonly string SAPDatabase = ConfigurationManager.AppSettings["SAPDatabase"];
-        private readonly string SAPUser = ConfigurationManager.AppSettings["SAPUser"];
-        private readonly string SAPPassword = ConfigurationManager.AppSettings["SAPPassword"];
-        private readonly string SAPUserDB = ConfigurationManager.AppSettings["SAPUserDB"];
-        private readonly string SAPPasswordDB = ConfigurationManager.AppSettings["SAPPasswordDB"];
-        private readonly string SAPLicenseServer = ConfigurationManager.AppSettings["SAPLicenseServer"];
+        private readonly string SAPServer = WebConfiguration.GetRequiredValue("SAP:Server");
+        private readonly string SAPDatabase = WebConfiguration.GetRequiredValue("SAP:Database");
+        private readonly string SAPUser = WebConfiguration.GetRequiredValue("SAP:User");
+        private readonly string SAPPassword = WebConfiguration.GetRequiredValue("SAP:Password");
+        private readonly string SAPUserDB = WebConfiguration.GetRequiredValue("SAP:DatabaseUser");
+        private readonly string SAPPasswordDB = WebConfiguration.GetRequiredValue("SAP:DatabasePassword");
+        private readonly string SAPLicenseServer = WebConfiguration.GetRequiredValue("SAP:LicenseServer");
         public SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();
         /// <summary>
         /// Procedimiento para hacer una conexion a SAP
