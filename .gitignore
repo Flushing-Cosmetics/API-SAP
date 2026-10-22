@@ -2,4 +2,4 @@ bin/
 obj/
 .vs/
 TestResults/
-src/ApiSap/libs/sap/
+src/ApiSap/libs/*.dll
