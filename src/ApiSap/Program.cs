@@ -3,7 +3,6 @@ using Scalar.AspNetCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("webconfig.json", optional: false, reloadOnChange: true);
-WS_SAP.WebConfiguration.Initialize(builder.Configuration);
 
 // Add services to the container.
 

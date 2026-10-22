@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Threading;
+using Microsoft.Extensions.Configuration;
 namespace WS_SAP
 {
     /// <summary>
@@ -11,17 +13,26 @@ namespace WS_SAP
     /// </summary>
     public class SAP
     {
+        private static readonly Lazy<IConfiguration> Configuration = new(CargarConfiguracion);
         /// <summary>
         /// Variables de Servidores
         /// </summary>
-        private readonly string SAPServer = WebConfiguration.GetRequiredValue("SAP:Server");
-        private readonly string SAPDatabase = WebConfiguration.GetRequiredValue("SAP:Database");
-        private readonly string SAPUser = WebConfiguration.GetRequiredValue("SAP:User");
-        private readonly string SAPPassword = WebConfiguration.GetRequiredValue("SAP:Password");
-        private readonly string SAPUserDB = WebConfiguration.GetRequiredValue("SAP:DatabaseUser");
-        private readonly string SAPPasswordDB = WebConfiguration.GetRequiredValue("SAP:DatabasePassword");
-        private readonly string SAPLicenseServer = WebConfiguration.GetRequiredValue("SAP:LicenseServer");
+        private readonly string SAPServer = Configuration.Value["SAP:Server"] ?? string.Empty;
+        private readonly string SAPDatabase = Configuration.Value["SAP:Database"] ?? string.Empty;
+        private readonly string SAPUser = Configuration.Value["SAP:User"] ?? string.Empty;
+        private readonly string SAPPassword = Configuration.Value["SAP:Password"] ?? string.Empty;
+        private readonly string SAPUserDB = Configuration.Value["SAP:DatabaseUser"] ?? string.Empty;
+        private readonly string SAPPasswordDB = Configuration.Value["SAP:DatabasePassword"] ?? string.Empty;
+        private readonly string SAPLicenseServer = Configuration.Value["SAP:LicenseServer"] ?? string.Empty;
         public SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();
+
+        private static IConfiguration CargarConfiguracion()
+        {
+            return new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("webconfig.json", optional: false, reloadOnChange: false)
+                .Build();
+        }
         /// <summary>
         /// Procedimiento para hacer una conexion a SAP
         /// </summary>

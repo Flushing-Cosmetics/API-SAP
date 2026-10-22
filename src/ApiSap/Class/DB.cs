@@ -1,4 +1,5 @@
 using System.Data;
+using System.IO;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
@@ -9,6 +10,7 @@ namespace WS_SAP;
 /// </summary>
 public sealed class DB : IDisposable, IAsyncDisposable
 {
+    private static readonly Lazy<IConfiguration> configuration = new(CargarConfiguracion);
     private readonly string connectionString;
     private readonly int commandTimeout;
     private SqlConnection? connection;
@@ -16,7 +18,7 @@ public sealed class DB : IDisposable, IAsyncDisposable
     private SqlTransaction? transaction;
 
     public DB()
-        : this(WebConfiguration.Current)
+        : this(configuration.Value)
     {
     }
 
@@ -200,5 +202,13 @@ public sealed class DB : IDisposable, IAsyncDisposable
         {
             command.Transaction = null;
         }
+    }
+
+    private static IConfiguration CargarConfiguracion()
+    {
+        return new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("webconfig.json", optional: false, reloadOnChange: false)
+            .Build();
     }
 }
