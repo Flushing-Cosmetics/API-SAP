@@ -11,4 +11,8 @@
     <PackageReference Include="Scalar.AspNetCore" Version="2.18.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Legacy\**\*.cs" />
+  </ItemGroup>
+
 </Project>
