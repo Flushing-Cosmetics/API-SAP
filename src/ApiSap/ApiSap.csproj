@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.1.1" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.18.2" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="Class\**\*.cs" />
+    <Compile Include="Class\DB.cs" />
   </ItemGroup>
 
   <ItemGroup>

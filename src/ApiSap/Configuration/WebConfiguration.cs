@@ -6,6 +6,9 @@ public static class WebConfiguration
 {
     private static IConfiguration? configuration;
 
+    public static IConfiguration Current => configuration
+        ?? throw new InvalidOperationException("Application configuration has not been initialized.");
+
     public static void Initialize(IConfiguration applicationConfiguration)
     {
         configuration = applicationConfiguration;
@@ -13,7 +16,7 @@ public static class WebConfiguration
 
     public static string GetRequiredValue(string key)
     {
-        return configuration?[key]
+        return Current[key]
             ?? throw new InvalidOperationException($"Missing required configuration value: {key}");
     }
 }

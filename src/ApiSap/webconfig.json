@@ -6,7 +6,9 @@
     "Server": "",
     "Name": "",
     "User": "",
-    "Password": ""
+    "Password": "",
+    "TrustServerCertificate": "true",
+    "CommandTimeout": 30
   },
   "SAP": {
     "Server": "",
