@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Threading;
-using Microsoft.Extensions.Configuration;
 namespace WS_SAP
 {
     /// <summary>
@@ -13,25 +9,47 @@ namespace WS_SAP
     /// </summary>
     public class SAP
     {
-        private static readonly Lazy<IConfiguration> Configuration = new(CargarConfiguracion);
         /// <summary>
         /// Variables de Servidores
         /// </summary>
-        private readonly string SAPServer = Configuration.Value["SAP:Server"] ?? string.Empty;
-        private readonly string SAPDatabase = Configuration.Value["SAP:Database"] ?? string.Empty;
-        private readonly string SAPUser = Configuration.Value["SAP:User"] ?? string.Empty;
-        private readonly string SAPPassword = Configuration.Value["SAP:Password"] ?? string.Empty;
-        private readonly string SAPUserDB = Configuration.Value["SAP:DatabaseUser"] ?? string.Empty;
-        private readonly string SAPPasswordDB = Configuration.Value["SAP:DatabasePassword"] ?? string.Empty;
-        private readonly string SAPLicenseServer = Configuration.Value["SAP:LicenseServer"] ?? string.Empty;
+        private readonly string SAPServer;
+        private readonly string SAPDatabase;
+        private readonly string SAPUser;
+        private readonly string SAPPassword;
+        private readonly string SAPUserDB;
+        private readonly string SAPPasswordDB;
+        private readonly string SAPLicenseServer;
         public SAPbobsCOM.Company oCompany = new SAPbobsCOM.Company();
 
-        private static IConfiguration CargarConfiguracion()
+        /// <summary>
+        /// Creates a SAP connection helper with explicitly supplied connection values.
+        /// </summary>
+        public SAP(
+            string server,
+            string database,
+            string user,
+            string password,
+            string databaseUser,
+            string databasePassword,
+            string licenseServer)
         {
-            return new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("webconfig.json", optional: false, reloadOnChange: false)
-                .Build();
+            SAPServer = RequireValue(server, nameof(server));
+            SAPDatabase = RequireValue(database, nameof(database));
+            SAPUser = RequireValue(user, nameof(user));
+            SAPPassword = RequireValue(password, nameof(password));
+            SAPUserDB = RequireValue(databaseUser, nameof(databaseUser));
+            SAPPasswordDB = RequireValue(databasePassword, nameof(databasePassword));
+            SAPLicenseServer = RequireValue(licenseServer, nameof(licenseServer));
+        }
+
+        private static string RequireValue(string value, string parameterName)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentException("The SAP connection value is required.", parameterName);
+            }
+
+            return value;
         }
         /// <summary>
         /// Procedimiento para hacer una conexion a SAP
